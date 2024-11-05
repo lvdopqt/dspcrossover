@@ -1,0 +1,254 @@
+[
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_0",
+        "Parameter Address": "4",
+        "Parameter Value": 0.000261664390563965
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_0",
+        "Parameter Address": "5",
+        "Parameter Value": 0.00052332878112793
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_0",
+        "Parameter Address": "6",
+        "Parameter Value": 1.95372796058655
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_0",
+        "Parameter Address": "7",
+        "Parameter Value": 0.000261664390563965
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_0",
+        "Parameter Address": "8",
+        "Parameter Value": -0.954774618148804
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_1",
+        "Parameter Address": "9",
+        "Parameter Value": 0.000261664390563965
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_1",
+        "Parameter Address": "10",
+        "Parameter Value": 0.00052332878112793
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_1",
+        "Parameter Address": "11",
+        "Parameter Value": 1.95372796058655
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_1",
+        "Parameter Address": "12",
+        "Parameter Value": 0.000261664390563965
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_1",
+        "Parameter Address": "13",
+        "Parameter Value": -0.954774618148804
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_2",
+        "Parameter Address": "14",
+        "Parameter Value": 0.977125644683838
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_2",
+        "Parameter Address": "15",
+        "Parameter Value": -1.95425128936768
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_2",
+        "Parameter Address": "16",
+        "Parameter Value": 1.95372796058655
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_2",
+        "Parameter Address": "17",
+        "Parameter Value": 0.977125644683838
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_2",
+        "Parameter Address": "18",
+        "Parameter Value": -0.954774618148804
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_3",
+        "Parameter Address": "19",
+        "Parameter Value": 0.977125644683838
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_3",
+        "Parameter Address": "20",
+        "Parameter Value": -1.95425128936768
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_3",
+        "Parameter Address": "21",
+        "Parameter Value": 1.95372796058655
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_3",
+        "Parameter Address": "22",
+        "Parameter Value": 0.977125644683838
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_3",
+        "Parameter Address": "23",
+        "Parameter Value": -0.954774618148804
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_4",
+        "Parameter Address": "24",
+        "Parameter Value": 0.0299545526504517
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_4",
+        "Parameter Address": "25",
+        "Parameter Value": 0.0599091053009033
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_4",
+        "Parameter Address": "26",
+        "Parameter Value": 1.45424354076385
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_4",
+        "Parameter Address": "27",
+        "Parameter Value": 0.0299545526504517
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_4",
+        "Parameter Address": "28",
+        "Parameter Value": -0.574061870574951
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_5",
+        "Parameter Address": "29",
+        "Parameter Value": 0.0299545526504517
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_5",
+        "Parameter Address": "30",
+        "Parameter Value": 0.0599091053009033
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_5",
+        "Parameter Address": "31",
+        "Parameter Value": 1.45424354076385
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_5",
+        "Parameter Address": "32",
+        "Parameter Value": 0.0299545526504517
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_5",
+        "Parameter Address": "33",
+        "Parameter Value": -0.574061870574951
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_6",
+        "Parameter Address": "34",
+        "Parameter Value": 0.757076382637024
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_6",
+        "Parameter Address": "35",
+        "Parameter Value": -1.51415276527405
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_6",
+        "Parameter Address": "36",
+        "Parameter Value": 1.45424354076385
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_6",
+        "Parameter Address": "37",
+        "Parameter Value": 0.757076382637024
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_6",
+        "Parameter Address": "38",
+        "Parameter Value": -0.574061870574951
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B0_7",
+        "Parameter Address": "39",
+        "Parameter Value": 0.757076382637024
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B1_7",
+        "Parameter Address": "40",
+        "Parameter Value": -1.51415276527405
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A1_7",
+        "Parameter Address": "41",
+        "Parameter Value": 1.45424354076385
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1B2_7",
+        "Parameter Address": "42",
+        "Parameter Value": 0.757076382637024
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1A2_7",
+        "Parameter Address": "43",
+        "Parameter Value": -0.574061870574951
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1LowInvert",
+        "Parameter Address": "2",
+        "Parameter Value": 1
+    },
+    {
+        "Cell Name": "Crossover1",
+        "Parameter Name": "CrossoverFilter3WayAlgSP1HighInvert",
+        "Parameter Address": "3",
+        "Parameter Value": 1
+    }
+]

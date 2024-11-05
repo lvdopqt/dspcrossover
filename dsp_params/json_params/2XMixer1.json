@@ -1,0 +1,14 @@
+[
+    {
+        "Cell Name": "2XMixer1",
+        "Parameter Name": "TwoChanXMixer1940Alg100",
+        "Parameter Address": "0",
+        "Parameter Value": 0.0316227674484253
+    },
+    {
+        "Cell Name": "2XMixer1",
+        "Parameter Name": "TwoChanXMixer1940Alg110",
+        "Parameter Address": "1",
+        "Parameter Value": 0.0316227674484253
+    }
+]

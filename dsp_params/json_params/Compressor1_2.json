@@ -1,0 +1,31 @@
+[
+    {
+        "Cell Name": "Compressor1_2",
+        "Parameter Name": "MonoNoPostGain3dBFix2",
+        "Parameter Address": "197"
+    },
+    {
+        "Cell Name": "Compressor1_2",
+        "Parameter Name": "MonoNoPostGain3dBFix2RMS",
+        "Parameter Address": "237",
+        "Parameter Value": 0.000580668449401855
+    },
+    {
+        "Cell Name": "Compressor1_2",
+        "Parameter Name": "MonoNoPostGain3dBFix2hold",
+        "Parameter Address": "238",
+        "Parameter Value": 0
+    },
+    {
+        "Cell Name": "Compressor1_2",
+        "Parameter Name": "MonoNoPostGain3dBFix2decay",
+        "Parameter Address": "239",
+        "Parameter Value": 2.14576721191406e-06
+    },
+    {
+        "Cell Name": "Compressor1_2",
+        "Parameter Name": "MonoNoPostGain3dBFix2level",
+        "Parameter Address": "240",
+        "Parameter Value": 0.00250005722045898
+    }
+]
