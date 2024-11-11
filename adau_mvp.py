@@ -13,7 +13,7 @@ def test_crossover_coefficients_write_and_read():
     
     # Calculate bandpass coefficients and write to DSP
     expected_coefficients = crossover.service.calculate_bandpass_coefficients(
-        low_cutoff=100, high_cutoff=1000, fs=48000
+        low_cut=100, high_cut=1000
     )
     bytes_array = b''.join(crossover.service.dsp.DspNumber(value).bytes for value in expected_coefficients)
     crossover.service.dsp.parameter_ram.write(bytes_array=bytes_array, address=34)
