@@ -3,8 +3,8 @@ from controllers.base import BaseController
 
 class Compressor(BaseController):
     
-    def __init__(self):
-        super().__init__()
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
         self.threshold = 0
         self.ratio = 0
         self.attack = 0

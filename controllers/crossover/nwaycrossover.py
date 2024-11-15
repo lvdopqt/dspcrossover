@@ -6,9 +6,11 @@ class NWayCrossover(BaseController):
     default_n = 4
     channels_names = ["Low", "Low-Mid", "High-Mid", "High"]
 
-    def __init__(self):
+    def __init__(self, addresses, name='3way Crossover'):
         super().__init__()
+        self.name = name
         self.n = self.default_n
+        self.addresses = addresses
         self.channels_names = self.channels_names
         self.current_page = 0  # Tracks which pair of channels to display
         self.cursor_position = 0  # Tracks cursor position within the displayed channels
@@ -26,7 +28,7 @@ class NWayCrossover(BaseController):
         display_text = ""
         for i in range(start_channel, end_channel):
             channel_number = i + 1
-            channel_name = self.channels[i]
+            channel_name = self.channels_names[i]
             low_cutoff, high_cutoff = self.get_frequency(channel_number)
             
             # Indicate the cursor position
