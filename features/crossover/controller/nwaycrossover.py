@@ -1,6 +1,6 @@
 import gc
-from controllers.base import BaseController
-from controllers.crossover.crossover import Crossover
+from features.controllers.base import BaseController
+from features.crossover.controller.crossover import Crossover
 
 class NWayCrossover(BaseController):
     default_n = 4

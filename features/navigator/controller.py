@@ -1,8 +1,5 @@
-from controllers.menu import Menu
-from controllers.compressor import Compressor
-from controllers.crossover.nwaycrossover import NWayCrossover
-from controllers.mixer import InputMixer
-from services.i2c_lcd import I2cLcd
+from features.menu import Menu
+from lcd.i2c_lcd import I2cLcd
 from machine import I2C, Pin
 
 class Navigator:

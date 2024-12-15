@@ -1,8 +1,8 @@
 
-from controllers.base import BaseController
-from controllers.compressor import Compressor
-from controllers.crossover.nwaycrossover import NWayCrossover
-from controllers.mixer import InputMixer
+from features.controllers.base import BaseController
+from features.compressor.controller import Compressor
+from features.crossover.controller.nwaycrossover import NWayCrossover
+from features.mixer.controller import InputMixer
 
 
 class Menu(BaseController):

@@ -1,7 +1,7 @@
-from events.event_bus import EventBus
-from controllers.navigator import Navigator
-from services.rotary_encoder import RotaryEncoder
-from services.back_button import BackButton
+from features.events.event_bus import EventBus
+from features.navigator.controller import Navigator
+from features.rotary_encoder import RotaryEncoder
+from features.back_button import BackButton
 
 # Initialize the EventBus
 event_bus = EventBus()

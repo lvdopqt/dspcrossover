@@ -1,6 +1,6 @@
 
-from controllers.base import BaseController
-from services.crossover import Crossover as CrossoverService
+from features.controllers.base import BaseController
+from feature.crossover.service import Crossover as CrossoverService
 
 class Crossover(BaseController):
     def __init__(self, dsp, address):
