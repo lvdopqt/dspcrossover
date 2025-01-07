@@ -1,8 +1,8 @@
 from math import ceil
 
 
-from sigma.sigma_dsp import dsp_processor
-from sigma.sigma_dsp.messages import Message, MessageWrite
+from external.sigma.sigma_dsp import dsp_processor
+from external.sigma.sigma_dsp.messages import Message, MessageWrite
 
 SAMPLING_FREQ_DEFAULT = 48000
 

@@ -1,8 +1,8 @@
 from math import ceil
 
 
-import sigma.sigma_dsp.interfaces as interfaces
-from  sigma.sigma_dsp.numeric import Number
+import external.sigma.sigma_dsp.interfaces as interfaces
+from  external.sigma.sigma_dsp.numeric import Number
 
 FREQ_DEFAULT = None
 

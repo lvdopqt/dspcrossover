@@ -1,10 +1,10 @@
 import time
 from math import ceil
 
-from sigma.sigma_dsp.adau.adau import ADAU, SAMPLING_FREQ_DEFAULT
-from sigma.sigma_dsp.adau.adau1401.register import RegistersMap
-from sigma.sigma_dsp.adau.adau1401.registers_map import _get_all_registers
-from sigma.sigma_dsp.messages import Message, MessageWrite, MessageWrite_SUBADDRESS_SLICE
+from external.sigma.sigma_dsp.adau.adau import ADAU, SAMPLING_FREQ_DEFAULT
+from external.sigma.sigma_dsp.adau.adau1401.register import RegistersMap
+from external.sigma.sigma_dsp.adau.adau1401.registers_map import _get_all_registers
+from external.sigma.sigma_dsp.messages import Message, MessageWrite, MessageWrite_SUBADDRESS_SLICE
 
 
 

@@ -1,4 +1,4 @@
-from sigma.sigma_dsp.adau.adau1401.register import Register, Element
+from external.sigma.sigma_dsp.adau.adau1401.register import Register, Element
 
 
 

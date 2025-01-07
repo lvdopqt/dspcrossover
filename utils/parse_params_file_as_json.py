@@ -1,66 +1,41 @@
-import json
-import sys
+import re
 import os
+import json
+from collections import defaultdict
 
-def parse_parameters(data, output_path):
-    # Split data by cell blocks
-    blocks = data.strip().split("\n\n\n")
-    cells = {}
+def parse_params_file(file_content):
+    # Define a regex pattern for matching the data structure
+    pattern = r"""
+        Cell\sName\s+=\s(?P<cell_name>.+?)\n
+        Parameter\sName\s+=\s(?P<parameter_name>.+?)\n
+        Parameter\sAddress\s+=\s(?P<parameter_address>\d+)\n
+        Parameter\sValue\s+=\s(?P<parameter_value>[-+]?[0-9]*\.?[0-9]+(?:[eE][-+]?[0-9]+)?)\n
+        Parameter\sData\s+:\s*\n
+        (?P<parameter_data>(?:0x[0-9A-Fa-f]{2}\s*,?\s*)+)
+    """
+    matches = re.finditer(pattern, file_content, re.VERBOSE)
 
-    for block in blocks:
-        # Split each block by lines and create a dictionary for each parameter set
-        lines = block.strip().split("\n")
-        entry = {}
-        
-        for line in lines:
-            if "=" in line:
-                # Split each line by '=' and strip whitespace
-                key, value = map(str.strip, line.split("=", 1))
-                
-                # Remove trailing colons from keys
-                key = key.replace(":", "")
-                
-                if key == "Parameter Data":
-                    # Split the parameter data by commas and strip whitespace
-                    entry[key] = [byte.strip() for byte in value.split(",") if byte.strip()]
-                elif key == "Parameter Value":
-                    # Convert the parameter value to a float if possible
-                    entry[key] = float(value) if "." in value else int(value)
-                else:
-                    entry[key] = value
+    parsed_data = defaultdict(list)
 
-        # Get the cell name and ensure it has a default if missing
-        cell_name = entry.get("Cell Name", "unnamed_cell").replace(" ", "_")
-        
-        # Append the entry to the cell name group
-        if cell_name not in cells:
-            cells[cell_name] = []
-        cells[cell_name].append(entry)
+    # Iterate through matches and build a dictionary
+    for match in matches:
+        cell_name = match.group('cell_name').strip()
+        parameter_info = {
+            "Parameter Name": match.group('parameter_name').strip(),
+            "Parameter Address": int(match.group('parameter_address'))
+        }
+        parsed_data[cell_name].append(parameter_info)
 
-    # Ensure output path exists
-    os.makedirs(output_path, exist_ok=True)
+    return parsed_data
 
-    # Write each cell's parameters to its respective JSON file in the output path
-    for cell_name, entries in cells.items():
-        filename = os.path.join(output_path, f"{cell_name}.json")
-        with open(filename, "w") as f:
-            json.dump(entries, f, indent=4)
-        print(f"Saved {filename}")
 
-def process_file(filename, output_path):
-    try:
-        with open(filename, 'r') as file:
-            data = file.read()
-            parse_parameters(data, output_path)
-    except FileNotFoundError:
-        print(f"File {filename} not found.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+def main():
+    file_path = "params/dsp_params.params"  # Replace with the actual file path
+    if os.path.exists(file_path):
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+            parameters = parse_params_file(file_content)
+    with open('params/params.json', 'w') as f:
+        json.dump(parameters, f)
 
-if __name__ == "__main__":
-    if len(sys.argv) > 2:
-        input_file = sys.argv[1]
-        output_path = sys.argv[2]
-        process_file(input_file, output_path)
-    else:
-        print("Please provide an input filename and an output path.")
+main()

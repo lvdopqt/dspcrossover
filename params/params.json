@@ -1,0 +1,174 @@
+{
+    "Crossover1": [
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B0_0",
+            "Parameter Address": 1
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B1_0",
+            "Parameter Address": 2
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A1_0",
+            "Parameter Address": 3
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B2_0",
+            "Parameter Address": 4
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A2_0",
+            "Parameter Address": 5
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B0_1",
+            "Parameter Address": 6
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B1_1",
+            "Parameter Address": 7
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A1_1",
+            "Parameter Address": 8
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B2_1",
+            "Parameter Address": 9
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A2_1",
+            "Parameter Address": 10
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B0_2",
+            "Parameter Address": 11
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B1_2",
+            "Parameter Address": 12
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A1_2",
+            "Parameter Address": 13
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B2_2",
+            "Parameter Address": 14
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A2_2",
+            "Parameter Address": 15
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B0_3",
+            "Parameter Address": 16
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B1_3",
+            "Parameter Address": 17
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A1_3",
+            "Parameter Address": 18
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1B2_3",
+            "Parameter Address": 19
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1A2_3",
+            "Parameter Address": 20
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP1LowInvert",
+            "Parameter Address": 0
+        }
+    ],
+    "Crossover1_2": [
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B0_0",
+            "Parameter Address": 22
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B1_0",
+            "Parameter Address": 23
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A1_0",
+            "Parameter Address": 24
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B2_0",
+            "Parameter Address": 25
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A2_0",
+            "Parameter Address": 26
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B0_1",
+            "Parameter Address": 27
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B1_1",
+            "Parameter Address": 28
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A1_1",
+            "Parameter Address": 29
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B2_1",
+            "Parameter Address": 30
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A2_1",
+            "Parameter Address": 31
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B0_2",
+            "Parameter Address": 32
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B1_2",
+            "Parameter Address": 33
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A1_2",
+            "Parameter Address": 34
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B2_2",
+            "Parameter Address": 35
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A2_2",
+            "Parameter Address": 36
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B0_3",
+            "Parameter Address": 37
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B1_3",
+            "Parameter Address": 38
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A1_3",
+            "Parameter Address": 39
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2B2_3",
+            "Parameter Address": 40
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2A2_3",
+            "Parameter Address": 41
+        },
+        {
+            "Parameter Name": "CrossoverFilter2WayAlgSP2LowInvert",
+            "Parameter Address": 21
+        }
+    ]
+}
