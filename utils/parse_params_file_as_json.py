@@ -30,7 +30,7 @@ def parse_params_file(file_content):
 
 
 def main():
-    file_path = "params/dsp_params.params"  # Replace with the actual file path
+    file_path = "params/dsp_params.params" 
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
             file_content = file.read()

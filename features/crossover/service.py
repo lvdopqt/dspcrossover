@@ -2,7 +2,7 @@ import math
 
 from external.sigma.sigma_dsp.adau.adau import SAMPLING_FREQ_DEFAULT
 
-class Crossover:
+class CrossoverService:
 
     def __init__(self, dsp):
         self.dsp = dsp

@@ -1,4 +1,6 @@
 # Visual test of LCD
+# TODO: MAKE AND ACTUAL TEST
+
 from machine import I2C, Pin
 from lcd.i2c_lcd import I2cLcd
 from time import sleep

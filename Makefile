@@ -1,2 +1,0 @@
-prepare_param_files:
-	python utils/parse_params_file_as_json.py dsp_params/processador_caixaalta.params dsp_params/json_params/
