@@ -1,11 +1,12 @@
 # Visual test of LCD
-# TODO: MAKE AND ACTUAL TEST
 
 from machine import I2C, Pin
-from lcd.i2c_lcd import I2cLcd
 from time import sleep
 
-i2c = I2C(scl=Pin(26), sda=Pin(27), freq=400000)
+from config import LCD_SCL_PIN, LCD_SDA_PIN, I2C_FREQ
+from external.lcd.i2c_lcd import I2cLcd
+
+i2c = I2C(scl=Pin(LCD_SCL_PIN), sda=Pin(LCD_SDA_PIN), freq=I2C_FREQ)
 
 lcd = I2cLcd(i2c, 0x27, 2, 16)
 

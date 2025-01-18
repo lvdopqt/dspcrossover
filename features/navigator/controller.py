@@ -1,15 +1,11 @@
-from machine import I2C, Pin
-from external.lcd.i2c_lcd import I2cLcd
 from features.crossover.controller import TwoWayCrossover
 
 class Navigator:
-    def __init__(self, dsp, params, event_bus):
-        # Init I2c LCD
-        i2c = I2C(scl=Pin(26), sda=Pin(27), freq=400000)
-        self.lcd = I2cLcd(i2c, 0x27, 2, 16)
+    def __init__(self, dsp, params, event_bus, lcd, current_page):
+        self.lcd = lcd
 
         self.current_page_index = 0
-        self.current_page = TwoWayCrossover(dsp, params)
+        self.current_page = current_page
         
         event_bus.subscribe("click", self.on_click)
         event_bus.subscribe("back", self.on_back)

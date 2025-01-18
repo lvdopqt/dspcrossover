@@ -31,11 +31,11 @@ class TwoWayCrossover():
         The 2-way crossover is composed of 4 filters, each with 5 coefficients, and a low invert filter.
         """
         return {
-            'filter_1': params[0]['Parameter Address'],  # the head of a 5-coefficient filter
-            'filter_2': params[5]['Parameter Address'],  # the head of another 5-coefficient filter
-            'filter_3': params[10]['Parameter Address'],  # the head of another 5-coefficient filter
-            'filter_4': params[15]['Parameter Address'],  # the head of another 5-coefficient filter
-            'low_invert': params[20]['Parameter Address'] # NOTE: not used for now
+            0: params[0]['Parameter Address'],  # the head of a 5-coefficient filter
+            1: params[5]['Parameter Address'],  # the head of another 5-coefficient filter
+            2: params[10]['Parameter Address'],  # the head of another 5-coefficient filter
+            3: params[15]['Parameter Address'],  # the head of another 5-coefficient filter
+            4: params[20]['Parameter Address'] # NOTE: not used for now
         }
 
     def format_frequency(self, freq):
@@ -44,14 +44,16 @@ class TwoWayCrossover():
             return f"{freq/1000:.1f}kHz"
         return f"{freq}Hz"
     
-    def format_frequency_cursor(self, freq, selected_freq):
-        """ Format the frequency to be displayed on the LCD with cursor if selected """
-        return f">{freq}" if freq == selected_freq else f"{freq}"
-
+    def add_cursor_to_selected_filter(self, frequencies):
+        for i in range(len(frequencies)):
+            if i == self.cursor_position:
+                frequencies[i] = f">{frequencies[i]}"
+        return frequencies
+    
     def display(self):
         """ Display the current pair of channels on a 2-line LCD with cursor indication """
-        ch_1_hpf, ch_1_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params['filter_1'], self.params['filter_2'])
-        ch_2_hpf, ch_2_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params['filter_3'], self.params['filter_4'])
+        ch_1_lpf, ch_1_hpf = self.service.extract_bandpass_cutoff_frequencies(self.params[0], self.params[1])
+        ch_2_lpf, ch_2_hpf = self.service.extract_bandpass_cutoff_frequencies(self.params[2], self.params[3])
         
         # Use temporary frequencies if a filter is selected
         if self.selected_filter is not None:
@@ -61,11 +63,11 @@ class TwoWayCrossover():
             ch_2_lpf = self.temp_frequencies.get('ch_2_lpf', ch_2_lpf)
         
         # Map cursor positions to frequencies
-        frequencies = [self.format_frequency(f) for f in [ch_1_hpf, ch_1_lpf, ch_2_hpf, ch_2_lpf]]
-        selected_freq = frequencies[self.cursor_position]
+        frequencies = [self.format_frequency(f) for f in [ch_1_lpf, ch_1_hpf, ch_2_lpf, ch_2_hpf]]
+        frequencies = self.add_cursor_to_selected_filter(frequencies)
             
-        line1 = f"CH1: {self.format_frequency_cursor(ch_1_lpf, selected_freq)} - {self.format_frequency_cursor(ch_1_hpf, selected_freq)}"
-        line2 = f"CH2: {self.format_frequency_cursor(ch_2_lpf, selected_freq)} - {self.format_frequency_cursor(ch_2_hpf, selected_freq)}"
+        line1 = f"CH1: {frequencies[0]} - {frequencies[1]}"
+        line2 = f"CH2: {frequencies[2]} - {frequencies[3]}"
         
         return f"{line1}\n{line2}"
 
@@ -79,8 +81,8 @@ class TwoWayCrossover():
             # Select the filter for adjustment
             self.selected_filter = self.cursor_position
             # Initialize temporary frequencies
-            ch_1_hpf, ch_1_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params['filter_1'], self.params['filter_2'])
-            ch_2_hpf, ch_2_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params['filter_3'], self.params['filter_4'])
+            ch_1_hpf, ch_1_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params[0], self.params[1])
+            ch_2_hpf, ch_2_lpf = self.service.extract_bandpass_cutoff_frequencies(self.params[2], self.params[3])
             self.temp_frequencies = {
                 'ch_1_hpf': ch_1_hpf,
                 'ch_1_lpf': ch_1_lpf,
@@ -96,6 +98,7 @@ class TwoWayCrossover():
                 3: ('ch_2_lpf', 'ch_2_hpf')
             }
             low_key, high_key = filter_to_frequencies[self.selected_filter]
+            
             self.set_frequency(
                 self.temp_frequencies[low_key],
                 self.temp_frequencies[high_key],

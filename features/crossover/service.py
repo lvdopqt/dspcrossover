@@ -125,8 +125,8 @@ class CrossoverService:
 
         return highpass_coeffs, lowpass_coeffs
 
-    @classmethod
-    def extract_bandpass_cutoff_frequencies(cls, lpf_address, hpf_address, fs=SAMPLING_FREQ_DEFAULT):
+    
+    def extract_bandpass_cutoff_frequencies(self, lpf_address, hpf_address, fs=SAMPLING_FREQ_DEFAULT):
         """
         Extract the cutoff frequencies from bandpass filter coefficients.
 
@@ -142,11 +142,12 @@ class CrossoverService:
         lpf_coeffs = self.get_crossover_coefficients(lpf_address)
         hpf_coeffs = self.get_crossover_coefficients(hpf_address)
         
+        print(lpf_coeffs, hpf_coeffs)
         # Extract cutoff frequencies using coefficients
-        low_cutoff = cls.extract_highpass_cutoff_frequency(
+        low_cutoff = self.extract_highpass_cutoff_frequency(
             *hpf_coeffs, fs
         )
-        high_cutoff = cls.extract_lowpass_cutoff_frequency(
+        high_cutoff = self.extract_lowpass_cutoff_frequency(
             *lpf_coeffs, fs
         )
         return low_cutoff, high_cutoff
