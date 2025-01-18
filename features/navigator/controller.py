@@ -1,7 +1,7 @@
 from features.crossover.controller import TwoWayCrossover
 
 class Navigator:
-    def __init__(self, dsp, params, event_bus, lcd, current_page):
+    def __init__(self, event_bus, lcd, current_page):
         self.lcd = lcd
 
         self.current_page_index = 0
