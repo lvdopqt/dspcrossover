@@ -6,7 +6,7 @@ This project is a Digital Signal Processing (DSP) crossover system designed to m
 
 ## Schematics
 
-The project physical schematic is placed in the docs folder. 
+The project schematic is placed in the docs folder. 
 
 ## Key Components
 
@@ -35,27 +35,18 @@ The project physical schematic is placed in the docs folder.
 ## Usage
 
 1. **Setup**: Ensure that the hardware components (ESP32, rotary encoder, back button, LCD display, and DSP) are properly connected to the microcontroller.
-2. **Run the Application**: Execute `main.py` to start the application. The LCD will display the current state of the system, and the rotary encoder can be used to navigate and adjust settings.
+2. **Run the Application**: Place the repository in the controller. The LCD will display the current state of the system, and the rotary encoder can be used to navigate and adjust settings.
 3. **Adjust Crossover Settings**: Use the rotary encoder to select a filter and adjust its cutoff frequency. Press the encoder button to confirm the selection or the back button to cancel.
 
 ## Testing
 
-The project includes several test scripts to verify the functionality of individual components:
-
-- **`test_lcd.py`**: Tests the LCD display by writing a scrolling text message.
-- **`test_adau.py`**: Tests the DSP by writing and reading crossover coefficients.
-- **`test_rotary_encoder.py`**: Tests the rotary encoder by simulating rotations and button presses.
-- **`test_back_button.py`**: Tests the back button by simulating button presses.
+The project includes several test scripts to verify the functionality of individual components. You can run `make test` to test it locally. 
 
 ## Dependencies
 
 - **MicroPython**: The project is designed to run on MicroPython-compatible hardware.
 - **I2C LCD Library**: The `i2c_lcd.py` library is used to control the LCD display.
 - **Sigma DSP Library**: The `sigma_dsp` library provides the necessary functionality to interact with the DSP.
-
-## License
-
-This project is open-source and available under the MIT License. See the LICENSE file for more details.
 
 ## Contributing
 
