@@ -1,5 +1,5 @@
 class RotaryEncoder:
-    def __init__(self, clk_pin, dt_pin, sw_pin, event_bus, irq_trigger):
+    def __init__(self, clk_pin, dt_pin, sw_pin, event_bus):
         """
         Initialize the RotaryEncoder.
 
@@ -14,17 +14,19 @@ class RotaryEncoder:
         self.dt = dt_pin
         self.sw = sw_pin
         self.event_bus = event_bus
-        self.irq_trigger = irq_trigger
 
         # Monitors state changes
         self.last_clk = self.clk.value()
 
         # Triggers self.handle_click if switch button is clicked
-        self.sw.irq(trigger=self.irq_trigger, handler=self.handle_click)
+        self.sw.irq(trigger=self.sw.IRQ_FALLING, handler=self.handle_click)
 
     def handle_click(self, pin):
         """Emits a click event if the switch is clicked"""
-        self.event_bus.emit("click")
+        # Debounce to avoid double-clicking
+        time.sleep_ms(50)
+        if self.sw.value() == 1:
+            self.event_bus.emit("click")
 
     def read(self):
         """Verify the direction of encoder rotation and emits right and left events"""

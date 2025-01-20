@@ -21,5 +21,5 @@ class BackButton:
         """
         # Debounce to avoid double-clicking
         time.sleep_ms(50)
-        if self.back_button.value() == 0:  # Confirm the button is still pressed
+        if self.back_button.value() == 1:  # Confirm the button is still pressed
             self.event_bus.emit("back")

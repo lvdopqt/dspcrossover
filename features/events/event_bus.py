@@ -8,6 +8,7 @@ class EventBus:
         self.listeners[event_type].append(callback)
 
     def emit(self, event_type, data=None):
+        print(event_type)
         if event_type in self.listeners:
             for callback in self.listeners[event_type]:
                 callback(data)

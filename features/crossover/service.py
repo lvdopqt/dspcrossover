@@ -142,7 +142,6 @@ class CrossoverService:
         lpf_coeffs = self.get_crossover_coefficients(lpf_address)
         hpf_coeffs = self.get_crossover_coefficients(hpf_address)
         
-        print(lpf_coeffs, hpf_coeffs)
         # Extract cutoff frequencies using coefficients
         low_cutoff = self.extract_highpass_cutoff_frequency(
             *hpf_coeffs, fs

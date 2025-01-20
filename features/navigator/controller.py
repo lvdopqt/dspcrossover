@@ -18,12 +18,16 @@ class Navigator:
     
     def on_click(self, data=None):
         self.current_page.on_click()
+        self.display_current_page()
 
     def on_back(self, data=None):
         self.current_page.on_back()
+        self.display_current_page()
     
     def on_right(self, data=None):
         self.current_page.on_right()
+        self.display_current_page()
 
     def on_left(self, data=None):
         self.current_page.on_left()
+        self.display_current_page()

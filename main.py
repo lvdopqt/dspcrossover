@@ -1,9 +1,9 @@
-import json
 from machine import I2C, Pin
 import time
 
 from external.sigma.sigma_dsp.adau.adau1401.adau1401 import ADAU1401 as ADAU
 from external.sigma.bus.adapters import I2C as SigmaI2C
+from external.lcd.i2c_lcd import I2cLcd
 
 from config import (
     DSP_SCL_PIN, DSP_SCA_PIN,
@@ -53,19 +53,19 @@ class App:
     def _initialize_rotary_encoder(self):
         """Initialize and return the RotaryEncoder."""
         return RotaryEncoder(
-            clk_pin=ROTARY_ENCODER_CLK_PIN,
-            dt_pin=ROTARY_ENCODER_DT_PIN,
-            sw_pin=ROTARY_ENCODER_SW_PIN,
+            clk_pin=Pin(ROTARY_ENCODER_CLK_PIN),
+            dt_pin=Pin(ROTARY_ENCODER_DT_PIN),
+            sw_pin=Pin(ROTARY_ENCODER_SW_PIN),
             event_bus=self.event_bus
         )
 
     def _initialize_back_button(self):
         """Initialize and return the BackButton."""
-        return BackButton(back_pin=BACK_BUTTON_PIN, event_bus=self.event_bus)
+        return BackButton(back_button_pin=Pin(BACK_BUTTON_PIN, Pin.IN, Pin.PULL_UP), event_bus=self.event_bus)
 
     def _initialize_crossover(self):
         """Initialize and return the TwoWayCrossover."""
-        return TwoWayCrossover(self.dsp, self.params['Crossover_1'])
+        return TwoWayCrossover(self.dsp, self.params['Crossover1'])
 
     def _initialize_navigator(self):
         """Initialize and return the Navigator."""
@@ -77,8 +77,8 @@ class App:
 
     def _register_event_listeners(self):
         """Register event listeners on the EventBus."""
-        self.event_bus.subscribe("right", self.navigator.next_page)
-        self.event_bus.subscribe("left", self.navigator.previous_page)
+        self.event_bus.subscribe("right", self.navigator.on_right)
+        self.event_bus.subscribe("left", self.navigator.on_left)
         self.event_bus.subscribe("click", self.navigator.on_click)
         self.event_bus.subscribe("back", self.navigator.on_back)
 

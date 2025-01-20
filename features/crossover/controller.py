@@ -40,6 +40,7 @@ class TwoWayCrossover():
 
     def format_frequency(self, freq):
         """ Format the frequency to be displayed on the LCD """
+        freq = int(freq)
         if freq >= 1000:
             return f"{freq/1000:.1f}kHz"
         return f"{freq}Hz"
@@ -66,8 +67,8 @@ class TwoWayCrossover():
         frequencies = [self.format_frequency(f) for f in [ch_1_lpf, ch_1_hpf, ch_2_lpf, ch_2_hpf]]
         frequencies = self.add_cursor_to_selected_filter(frequencies)
             
-        line1 = f"CH1: {frequencies[0]} - {frequencies[1]}"
-        line2 = f"CH2: {frequencies[2]} - {frequencies[3]}"
+        line1 = f"L: {frequencies[0]}-{frequencies[1]}"
+        line2 = f"R: {frequencies[2]}-{frequencies[3]}"
         
         return f"{line1}\n{line2}"
 
