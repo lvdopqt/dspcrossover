@@ -15,11 +15,15 @@ class BackButton:
         # Set up the IRQ handler
         self.back_button.irq(trigger=self.back_button.IRQ_FALLING, handler=self.handle_back)
 
+        # Variables for debouncing
+        self.last_click_time = 0  # Track the last click time
+        self.debounce_time = 10
+
     def handle_back(self, pin):
         """
         Handle the button press event.
         """
-        # Debounce to avoid double-clicking
-        time.sleep_ms(50)
-        if self.back_button.value() == 1:  # Confirm the button is still pressed
+        current_time = time.ticks_ms()
+        if current_time - self.last_click_time > self.debounce_time:  # Debounce check
+            self.last_click_time = current_time
             self.event_bus.emit("back")

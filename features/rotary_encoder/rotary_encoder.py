@@ -1,3 +1,5 @@
+import time
+
 class RotaryEncoder:
     def __init__(self, clk_pin, dt_pin, sw_pin, event_bus):
         """
@@ -21,11 +23,17 @@ class RotaryEncoder:
         # Triggers self.handle_click if switch button is clicked
         self.sw.irq(trigger=self.sw.IRQ_FALLING, handler=self.handle_click)
 
+        # Variables for debouncing
+        self.last_click_time = 0  # Track the last click time
+        self.debounce_time = 10
+
     def handle_click(self, pin):
-        """Emits a click event if the switch is clicked"""
-        # Debounce to avoid double-clicking
-        time.sleep_ms(50)
-        if self.sw.value() == 1:
+        """
+        Handle the switch click event with debouncing.
+        """
+        current_time = time.ticks_ms()
+        if current_time - self.last_click_time > self.debounce_time:  # Debounce check
+            self.last_click_time = current_time
             self.event_bus.emit("click")
 
     def read(self):

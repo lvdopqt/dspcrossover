@@ -53,9 +53,9 @@ class App:
     def _initialize_rotary_encoder(self):
         """Initialize and return the RotaryEncoder."""
         return RotaryEncoder(
-            clk_pin=Pin(ROTARY_ENCODER_CLK_PIN),
-            dt_pin=Pin(ROTARY_ENCODER_DT_PIN),
-            sw_pin=Pin(ROTARY_ENCODER_SW_PIN),
+            clk_pin=Pin(ROTARY_ENCODER_CLK_PIN, Pin.IN, Pin.PULL_UP),
+            dt_pin=Pin(ROTARY_ENCODER_DT_PIN, Pin.IN, Pin.PULL_UP),
+            sw_pin=Pin(ROTARY_ENCODER_SW_PIN, Pin.IN, Pin.PULL_UP),
             event_bus=self.event_bus
         )
 
