@@ -1,4 +1,4 @@
-from machine import I2C, Pin
+from machine import SoftI2C, Pin
 import time
 
 from external.sigma.sigma_dsp.adau.adau1401.adau1401 import ADAU1401 as ADAU
@@ -37,13 +37,13 @@ class App:
 
     def _initialize_dsp(self):
         """Initialize and return the DSP."""
-        dsp_i2c = I2C(scl=Pin(DSP_SCL_PIN), sda=Pin(DSP_SCA_PIN), freq=I2C_FREQ)
+        dsp_i2c = SoftI2C(scl=Pin(DSP_SCL_PIN), sda=Pin(DSP_SCA_PIN), freq=I2C_FREQ)
         bus = SigmaI2C(dsp_i2c)
         return ADAU(bus)
 
     def _initialize_lcd(self):
         """Initialize and return the LCD."""
-        lcd_i2c = I2C(scl=Pin(LCD_SCL_PIN), sda=Pin(LCD_SDA_PIN), freq=I2C_FREQ)
+        lcd_i2c = SoftI2C(scl=Pin(LCD_SCL_PIN), sda=Pin(LCD_SDA_PIN), freq=I2C_FREQ)
         return I2cLcd(lcd_i2c, 0x27, 2, 16)
 
     def _load_params(self):
@@ -70,7 +70,6 @@ class App:
     def _initialize_navigator(self):
         """Initialize and return the Navigator."""
         return Navigator(
-            event_bus=self.event_bus,
             lcd=self.lcd,
             current_page=self.two_way_crossover
         )

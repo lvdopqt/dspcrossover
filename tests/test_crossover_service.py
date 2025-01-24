@@ -81,3 +81,23 @@ def test_extract_bandpass_cutoff_frequencies():
     assert isinstance(low_cutoff, float), "Low cutoff frequency should be a float"
     assert isinstance(high_cutoff, float), "High cutoff frequency should be a float"
     print("test_extract_bandpass_cutoff_frequencies passed!")
+
+
+def run_all_tests():
+    """Run all test functions."""
+    print("Running all tests...\n")
+
+    # Run each test function
+    test_calculate_lowpass_coefficients()
+    test_calculate_highpass_coefficients()
+    test_calculate_bandpass_coefficients()
+    test_set_bandpass_cutoff_frequencies()
+    test_extract_lowpass_cutoff_frequency()
+    test_extract_highpass_cutoff_frequency()
+    test_extract_bandpass_cutoff_frequencies()
+
+    print("\nAll tests passed!")
+
+# Run all tests
+if __name__ == "__main__":
+    run_all_tests()

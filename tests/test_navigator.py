@@ -64,30 +64,16 @@ class MockLCD:
         self.putstr_called = True
         self.display_text = text
 
-# Mock EventBus class
-class MockEventBus:
-    def __init__(self):
-        self.subscriptions = {}
-
-    def subscribe(self, event, handler):
-        self.subscriptions[event] = handler
-
-    def emit(self, event, data=None):
-        if event in self.subscriptions:
-            self.subscriptions[event](data)
-
 # Test initialization with TwoWayCrossover
 def test_navigator_initialization_two_way_crossover():
     # Create mock dependencies
     mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
     mock_current_page = MockTwoWayCrossover()
 
     # Create Navigator instance
     navigator = Navigator(
         dsp={},  # Not used in this test
         params={},  # Not used in this test
-        event_bus=mock_event_bus,
         lcd=mock_lcd,
         current_page=mock_current_page
     )
@@ -103,14 +89,12 @@ def test_navigator_initialization_two_way_crossover():
 def test_navigator_initialization_another_page():
     # Create mock dependencies
     mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
     mock_current_page = MockAnotherPage()
 
     # Create Navigator instance
     navigator = Navigator(
         dsp={},  # Not used in this test
         params={},  # Not used in this test
-        event_bus=mock_event_bus,
         lcd=mock_lcd,
         current_page=mock_current_page
     )
@@ -122,60 +106,17 @@ def test_navigator_initialization_another_page():
     assert mock_lcd.display_text == "Mock AnotherPage Display Text", "LCD should display the correct text"
     print("[PASS] test_navigator_initialization_another_page")
 
-# Test click event
-def test_navigator_click_event():
-    # Create mock dependencies
-    mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
-    mock_current_page = MockTwoWayCrossover()
-
-    # Create Navigator instance
-    navigator = Navigator(
-        dsp={},  # Not used in this test
-        params={},  # Not used in this test
-        event_bus=mock_event_bus,
-        lcd=mock_lcd,
-        current_page=mock_current_page
-    )
-
-    # Simulate a click event
-    mock_event_bus.emit("click")
-    assert navigator.current_page.on_click_called, "on_click should be called on the current page"
-    
-
-# Test back event
-def test_navigator_back_event():
-    # Create mock dependencies
-    mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
-    mock_current_page = MockTwoWayCrossover()
-
-    # Create Navigator instance
-    navigator = Navigator(
-        dsp={},  # Not used in this test
-        params={},  # Not used in this test
-        event_bus=mock_event_bus,
-        lcd=mock_lcd,
-        current_page=mock_current_page
-    )
-
-    # Simulate a back event
-    mock_event_bus.emit("back")
-    assert navigator.current_page.on_back_called, "on_back should be called on the current page"
-    
 
 # Test right event
 def test_navigator_right_event():
     # Create mock dependencies
     mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
     mock_current_page = MockTwoWayCrossover()
 
     # Create Navigator instance
     navigator = Navigator(
         dsp={},  # Not used in this test
         params={},  # Not used in this test
-        event_bus=mock_event_bus,
         lcd=mock_lcd,
         current_page=mock_current_page
     )
@@ -188,14 +129,12 @@ def test_navigator_right_event():
 def test_navigator_left_event():
     # Create mock dependencies
     mock_lcd = MockLCD()
-    mock_event_bus = MockEventBus()
     mock_current_page = MockTwoWayCrossover()
 
     # Create Navigator instance
     navigator = Navigator(
         dsp={},  # Not used in this test
         params={},  # Not used in this test
-        event_bus=mock_event_bus,
         lcd=mock_lcd,
         current_page=mock_current_page
     )

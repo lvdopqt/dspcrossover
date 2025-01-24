@@ -1,14 +1,11 @@
 from features.crossover.controller import TwoWayCrossover
 
 class Navigator:
-    def __init__(self, event_bus, lcd, current_page):
+    def __init__(self, lcd, current_page):
         self.lcd = lcd
 
         self.current_page_index = 0
         self.current_page = current_page
-        
-        event_bus.subscribe("click", self.on_click)
-        event_bus.subscribe("back", self.on_back)
         self.display_current_page()
 
     def display_current_page(self):

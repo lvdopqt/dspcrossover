@@ -1,2 +1,4 @@
 .DS_STORE
 .vscode
+__pycache__
+*.code-workspace

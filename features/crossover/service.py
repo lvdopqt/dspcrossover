@@ -1,12 +1,55 @@
+import json
 import math
+import esp32
 
 from external.sigma.sigma_dsp.adau.adau import SAMPLING_FREQ_DEFAULT
 
 class CrossoverService:
+    crossover_memory_namespace = "crossover"
 
     def __init__(self, dsp):
         self.dsp = dsp
+        self.calculate_highpass_filter_coefficients = self.calculate_second_order_butterworth_highpass_coefficients
+        self.calculate_lowpass_filter_coefficients = self.calculate_second_order_butterworth_lowpass_coefficients
 
+    @classmethod
+    def save_state(cls, cutoffs, filter_id):
+        """
+        Save cutoff frequencies to NVS.
+        """
+        try:
+            nvs = esp32.NVS(cls.crossover_memory_namespace)
+            # Convert cutoffs to bytes
+            data = json.dumps({filter_id: cutoffs}).encode('utf-8')
+            nvs.set_blob(filter_id, data)  # Store under the filter_id key
+            nvs.commit()  # Save changes
+        except Exception as e:
+            print("Error saving to NVS:", e)
+
+    @classmethod
+    def load_state(cls, filter_id):
+        try:
+            nvs = esp32.NVS("crossover")
+            
+            # Step 1: Get the size of the blob
+            size = nvs.get_blob(filter_id, bytearray(0))  # Pass empty buffer to get size
+            if size is None:
+                return None  # Key does not exist
+            
+            # Step 2: Allocate a buffer of the exact size
+            data = bytearray(size)
+            
+            # Step 3: Read the blob into the buffer
+            nvs.get_blob(filter_id, data)
+            
+            # Step 4: Decode and parse JSON
+            decoded_data = json.loads(data.decode('utf-8'))
+            return decoded_data.get(filter_id)
+        except Exception as e:
+            print("Error loading from NVS:", e)
+            return None
+
+    
     def set_bandpass_cutoff_frequencies(self, low_cutoff, high_cutoff, address):
         """
         Set the cutoff frequencies for a bandpass filter.
@@ -18,8 +61,8 @@ class CrossoverService:
         bytes_array = b''.join([self.dsp.DspNumber(v).bytes for v in coefficients])
         self.dsp.parameter_ram.write(bytes_array = bytes_array, address=address)
 
-    @classmethod
-    def split_bytes_into_chunks(cls, data, chunk_size=4):
+    @staticmethod
+    def split_bytes_into_chunks(data, chunk_size=4):
         # Ensure data is divisible by the chunk size
         assert len(data) % chunk_size == 0, "Data length must be divisible by the chunk size"
         # Split data into chunks
@@ -32,9 +75,48 @@ class CrossoverService:
         coefficients = self.dsp.parameter_ram.read(byte_size * n_coefficients, address)
         coefficients_blocks = self.split_bytes_into_chunks(coefficients, byte_size)
         return [self.dsp.DspNumber.from_bytes(v).value for v in coefficients_blocks]
-    
-    @classmethod
-    def calculate_lowpass_coefficients(cls, cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+
+    @staticmethod
+    def convolve_coefficients(coeffs1, coeffs2):
+        """
+        Convolve two sets of filter coefficients (polynomial multiplication).
+
+        Parameters:
+        - coeffs1 (list): Coefficients of the first polynomial.
+        - coeffs2 (list): Coefficients of the second polynomial.
+
+        Returns:
+        - list: Convolved coefficients.
+        """
+        result = [0] * (len(coeffs1) + len(coeffs2) - 1)
+        for i in range(len(coeffs1)):
+            for j in range(len(coeffs2)):
+                result[i + j] += coeffs1[i] * coeffs2[j]
+        return result
+
+    @staticmethod
+    def cascade_two_filters(B1, A1, B2, A2):
+        """
+        Cascade two filters into a single filter.
+
+        Parameters:
+        - B1 (list): Numerator coefficients of the first filter [B0_1, B1_1, ..., Bn_1].
+        - A1 (list): Denominator coefficients of the first filter [A0_1, A1_1, ..., An_1].
+        - B2 (list): Numerator coefficients of the second filter [B0_2, B1_2, ..., Bm_2].
+        - A2 (list): Denominator coefficients of the second filter [A0_2, A1_2, ..., Am_2].
+
+        Returns:
+        - B (list): Numerator coefficients of the resulting cascaded filter.
+        - A (list): Denominator coefficients of the resulting cascaded filter.
+        """
+        # Convolve the numerators and denominators
+        B = convolve_coefficients(B1, B2)
+        A = convolve_coefficients(A1, A2)
+
+        return B, A
+
+    @staticmethod
+    def calculate_first_order_lowpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
         Calculate the coefficients for a first-order lowpass filter.
 
@@ -52,8 +134,8 @@ class CrossoverService:
 
         return {'B0': B0, 'B1': B1, 'B2': 0, 'A1': A1, 'A2': 0}
 
-    @classmethod
-    def calculate_highpass_coefficients(cls, cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+    @staticmethod
+    def calculate_first_order_butterworthhighpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
         Calculate the coefficients for a first-order highpass filter.
 
@@ -71,42 +153,62 @@ class CrossoverService:
 
         return {'B0': B0, 'B1': B1, 'B2':0, 'A1': A1, 'A2': 0}
 
-    @classmethod
-    def extract_lowpass_cutoff_frequency(cls, B0, B1, A1, B2, A2, fs=SAMPLING_FREQ_DEFAULT):
+    @staticmethod
+    def calculate_second_order_butterworth_lowpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
-        Extract the cutoff frequency from lowpass filter coefficients.
+        Calculate the coefficients for a 2nd order lowpass Butterworth filter.
 
         Parameters:
-        - fs (float): Sampling frequency
-        - B0, B1, A1, B2, A2: Filter coefficients
+        - cutoff_freq (float): Cutoff frequency for the lowpass filter.
+        - gain (float): Linear gain to apply to the filter.
+        - fs (float): Sampling frequency.
 
         Returns:
-        - float: Cutoff frequency of the lowpass filter
+        - dict: Coefficients for the lowpass filter (B0, B1, B2, A1, A2).
         """
-        # For lowpass: A1 = e^(-2π*fc/fs)
-        # Therefore: fc = -fs/(2π) * ln(A1)
-        cutoff_freq = -fs/(2 * math.pi) * math.log(A1)
-        return cutoff_freq
+        omega = 2 * math.pi * cutoff_freq / fs
+        sn = math.sin(omega)
+        cs = math.cos(omega)
+        alpha = sn / (2 * (1 / math.sqrt(2)))  # Equivalent to sn / sqrt(2)
+        a0 = 1 + alpha
 
-    @classmethod 
-    def extract_highpass_cutoff_frequency(cls, B0, B1, A1, B2, A2, fs=SAMPLING_FREQ_DEFAULT):
+        A1 = -(2 * cs) / a0
+        A2 = (1 - alpha) / a0
+        B1 = (1 - cs) / a0 * (10 ** (gain / 20))
+        B0 = B1 / 2
+        B2 = B0
+
+        return {'B0': B0, 'B1': B1, 'B2': B2, 'A1': A1, 'A2': A2}
+
+    @staticmethod
+    def calculate_second_order_butterworth_highpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
-        Extract the cutoff frequency from highpass filter coefficients.
+        Calculate the coefficients for a 2nd order highpass Butterworth filter.
 
         Parameters:
-        - fs (float): Sampling frequency
-        - B0, B1, A1, B2, A2: Filter coefficients
+        - cutoff_freq (float): Cutoff frequency for the highpass filter.
+        - gain (float): Linear gain to apply to the filter.
+        - fs (float): Sampling frequency.
 
         Returns:
-        - float: Cutoff frequency of the highpass filter
+        - dict: Coefficients for the highpass filter (B0, B1, B2, A1, A2).
         """
-        # For highpass: A1 = e^(-2π*fc/fs)
-        # Therefore: fc = -fs/(2π) * ln(A1)
-        cutoff_freq = -fs/(2 * math.pi) * math.log(A1)
-        return cutoff_freq
+        omega = 2 * math.pi * cutoff_freq / fs
+        sn = math.sin(omega)
+        cs = math.cos(omega)
+        alpha = sn / (2 * (1 / math.sqrt(2)))  # Equivalent to sn / sqrt(2)
+        a0 = 1 + alpha
 
-    @classmethod
-    def calculate_bandpass_coefficients(cls, low_cut, high_cut, gain=1, fs=SAMPLING_FREQ_DEFAULT):
+        A1 = -(2 * cs) / a0
+        A2 = (1 - alpha) / a0
+        B1 = -(1 + cs) / a0 * (10 ** (gain / 20))
+        B0 = -B1 / 2
+        B2 = B0
+
+        return {'B0': B0, 'B1': B1, 'B2': B2, 'A1': A1, 'A2': A2}
+
+    
+    def calculate_bandpass_coefficients(self, low_cut, high_cut, gain=1, fs=SAMPLING_FREQ_DEFAULT):
         """
         Calculate coefficients for a bandpass filter by cascading a highpass and a lowpass filter.
 
@@ -120,34 +222,8 @@ class CrossoverService:
         - highpass_coeffs (dict): Coefficients for the highpass filter.
         - lowpass_coeffs (dict): Coefficients for the lowpass filter.
         """
-        highpass_coeffs = cls.calculate_highpass_coefficients(low_cut, gain, fs)
-        lowpass_coeffs = cls.calculate_lowpass_coefficients(high_cut, gain, fs)
+        highpass_coeffs = self.calculate_highpass_filter_coefficients(high_cut, gain, fs)
+        lowpass_coeffs = self.calculate_lowpass_filter_coefficients(low_cut, gain, fs)
 
         return highpass_coeffs, lowpass_coeffs
-
-    
-    def extract_bandpass_cutoff_frequencies(self, lpf_address, hpf_address, fs=SAMPLING_FREQ_DEFAULT):
-        """
-        Extract the cutoff frequencies from bandpass filter coefficients.
-
-        Parameters:
-        - lpf_address (int): Address of the lowpass filter.
-        - hpf_address (int): Address of the highpass filter.
-        - fs (float): Sampling frequency.
-
-        Returns:
-        - tuple: (low_cutoff, high_cutoff) frequencies of the bandpass filter
-        """
-        # Get the 5 coefficients from addresses
-        lpf_coeffs = self.get_crossover_coefficients(lpf_address)
-        hpf_coeffs = self.get_crossover_coefficients(hpf_address)
-        
-        # Extract cutoff frequencies using coefficients
-        low_cutoff = self.extract_highpass_cutoff_frequency(
-            *hpf_coeffs, fs
-        )
-        high_cutoff = self.extract_lowpass_cutoff_frequency(
-            *lpf_coeffs, fs
-        )
-        return low_cutoff, high_cutoff
     
