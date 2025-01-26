@@ -6,10 +6,11 @@ class TwoWayCrossover():
     DEFAULT_CUTOFF_1 = (30, 500) # Default for channel 1
     DEFAULT_CUTOFF_2 = (500, 20 * 1000) # Default for channel 2
 
-    def __init__(self, dsp, params, name='2way Crossover'):
+    def __init__(self, dsp, params, name='2way Crossover', channel_names=['A', 'B']):
         self.name = name
         self.params = self.parse_params(params)
         self.cursor_position = 0
+        self.channel_names = channel_names
         self.service = CrossoverService(dsp)
         self.selected_filter = None  # Track which filter is selected for adjustment
         self.temp_frequencies = {}   # Store temporary frequency adjustments
@@ -101,8 +102,8 @@ class TwoWayCrossover():
         frequencies = [self.format_frequency(f) for f in [ch_1_lpf, ch_1_hpf, ch_2_lpf, ch_2_hpf]]
         frequencies = self.add_cursor_to_selected_filter(frequencies)
             
-        line1 = f"A:{frequencies[0]}-{frequencies[1]} Hz"
-        line2 = f"B:{frequencies[2]}-{frequencies[3]} Hz"
+        line1 = f"{self.channel_names[0]}:{frequencies[0]}-{frequencies[1]} Hz"
+        line2 = f"{self.channel_names[1]}:{frequencies[2]}-{frequencies[3]} Hz"
         
         return f"{line1}\n{line2}"
 
@@ -116,7 +117,7 @@ class TwoWayCrossover():
         # Save the updated frequencies to RTC memory
         self.service.save_state(self.saved_frequencies, self.name)
 
-    def on_click(self, data=None):
+    def on_click(self, data=None, navigator=None):
         """ Handle click events """
         if self.selected_filter is None:
             # Select the filter for adjustment
@@ -160,6 +161,8 @@ class TwoWayCrossover():
             # Cancel the selection and reset temporary frequencies
             self.selected_filter = None
             self.temp_frequencies = {}
+            return True
+        return False # Allow Navigator to go back
 
     def adjust_frequency(self, direction):
         """ Helper method to adjust frequency based on direction ('left' or 'right') """

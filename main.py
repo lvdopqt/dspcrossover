@@ -16,6 +16,7 @@ from features.navigator.controller import Navigator
 from features.rotary_encoder import RotaryEncoder
 from features.back_button import BackButton
 from features.crossover.controller import TwoWayCrossover
+from features.menu.controller import Menu
 from utils.get_params import get_params
 
 class App:
@@ -27,7 +28,8 @@ class App:
         self.params = self._load_params()
         self.encoder = self._initialize_rotary_encoder()
         self.back_button = self._initialize_back_button()
-        self.two_way_crossover = self._initialize_crossover()
+        self.two_way_crossovers = self._initialize_crossovers()
+        self.menu = self._initialize_menu()
         self.navigator = self._initialize_navigator()
         self._register_event_listeners()
 
@@ -40,6 +42,9 @@ class App:
         dsp_i2c = SoftI2C(scl=Pin(DSP_SCL_PIN), sda=Pin(DSP_SCA_PIN), freq=I2C_FREQ)
         bus = SigmaI2C(dsp_i2c)
         return ADAU(bus)
+
+    def _initialize_menu(self):
+        return Menu(items=self.two_way_crossovers)
 
     def _initialize_lcd(self):
         """Initialize and return the LCD."""
@@ -63,15 +68,28 @@ class App:
         """Initialize and return the BackButton."""
         return BackButton(back_button_pin=Pin(BACK_BUTTON_PIN, Pin.IN, Pin.PULL_UP), event_bus=self.event_bus)
 
-    def _initialize_crossover(self):
+    def _initialize_crossovers(self):
         """Initialize and return the TwoWayCrossover."""
-        return TwoWayCrossover(self.dsp, self.params['Crossover1'])
+        return [
+            TwoWayCrossover(
+                self.dsp,
+                self.params['Crossover1'],
+                name='Xover-R',
+                channel_names=['A', 'B']
+                ),
+            TwoWayCrossover(
+                self.dsp,
+                self.params['Crossover1_2'],
+                name='Xover-L',
+                channel_names=['C', 'D']
+                )
+        ]
 
     def _initialize_navigator(self):
         """Initialize and return the Navigator."""
         return Navigator(
             lcd=self.lcd,
-            current_page=self.two_way_crossover
+            initial_page=self.menu
         )
 
     def _register_event_listeners(self):
