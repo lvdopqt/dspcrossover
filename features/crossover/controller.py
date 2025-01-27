@@ -57,9 +57,9 @@ class TwoWayCrossover():
         
         # Wrap around if the cursor position goes out of bounds
         if self.cursor_position > self.MAX_CURSOR_POSITION:
-            self.cursor_position = 0
-        elif self.cursor_position < 0:
             self.cursor_position = self.MAX_CURSOR_POSITION
+        elif self.cursor_position < 0:
+            self.cursor_position = 0
 
     def parse_params(self, params):
         """
