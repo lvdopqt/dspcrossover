@@ -38,15 +38,12 @@ The project schematic is placed in the docs folder.
 2. **Run the Application**: Place the repository in the controller. The LCD will display the current state of the system, and the rotary encoder can be used to navigate and adjust settings.
 3. **Adjust Crossover Settings**: Use the rotary encoder to select a filter and adjust its cutoff frequency. Press the encoder button to confirm the selection or the back button to cancel.
 
-## Testing
-
-The project includes several test scripts to verify the functionality of individual components. You can run `make test` to test it locally. 
 
 ## Dependencies
 
 - **MicroPython**: The project is designed to run on MicroPython-compatible hardware.
-- **I2C LCD Library**: The `i2c_lcd.py` library is used to control the LCD display.
-- **Sigma DSP Library**: The `sigma_dsp` library provides the necessary functionality to interact with the DSP.
+- **I2C LCD Library**: The `i2c_lcd.py` library is used to control the LCD display. [https://github.com/dhylands/python_lcd/blob/master/lcd/i2c_lcd.py](https://github.com/dhylands/python_lcd/blob/master/lcd/i2c_lcd.py)
+- **Sigma DSP Library**: The `sigma_dsp` library was adapted to provide the necessary functionality to interact with the DSP. Reference: [https://github.com/Wei1234c/SigmaDSP](https://github.com/Wei1234c/SigmaDSP)
 
 ## Contributing
 
