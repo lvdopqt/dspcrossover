@@ -48,8 +48,3 @@ The project schematic is placed in the docs folder.
 ## Contributing
 
 Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
-
-## Acknowledgments
-
-- The project uses the `i2c_lcd.py` library for controlling the LCD display.
-- The DSP processing is based on the Sigma DSP library, which provides a comprehensive interface for managing audio signal processing.
