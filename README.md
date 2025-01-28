@@ -4,6 +4,10 @@
 
 This project is a Digital Signal Processing (DSP) crossover system designed to manage audio signal using a ESP32 microcontroller and a ADAU1401. The system allows users to adjust crossover filter settings, such as cutoff frequencies, and navigate through different menus in a LCD display using a rotary encoder and a back button.
 
+<div style="width: 500px; height: 200px; overflow: hidden;">
+  <img src="docs/crossover_demo.gif" width="400" style="margin: -50px 0 0 -50px;" />
+</div>
+
 ## Schematics
 
 The project schematic is placed in the docs folder. 
