@@ -10,7 +10,7 @@ This project is a Digital Signal Processing (DSP) crossover system designed to m
 
 ## Schematics
 
-The project schematic is placed in the docs folder.
+The [project schematic](docs/Audio%20Processor%20-%20Schematics%20-%20Rev002.pdf) is placed in the docs folder.
 
 ## Key Components
 
