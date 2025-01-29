@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a Digital Signal Processing (DSP) crossover system designed to manage audio signal using a ESP32 microcontroller and a ADAU1401. The system allows users to adjust crossover filter settings, such as cutoff frequencies, and navigate through a menu to select the L/R crossovers in a LCD display using a rotary encoder and a back button.
+This project is a Digital Signal Processing (DSP) crossover system designed to manage audio signal using a ESP32 microcontroller and a ADAU1401. The system allows users to adjust crossover filter settings, such as cutoff frequencies, and navigate through a menu to select the L/R crossovers in a LCD display using a rotary encoder and a back button. The ADAU14/1701 has 2 audio inputs and 4 outputs. This setup allows it to set cutoff frequencies for each output, enabling customized audio filtering and signal routing.
 
 <div align="center">
    <img src="docs/crossover_demo.gif" width=600px />
