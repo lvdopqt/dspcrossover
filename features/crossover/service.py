@@ -9,8 +9,12 @@ class CrossoverService:
 
     def __init__(self, dsp):
         self.dsp = dsp
-        self.calculate_highpass_filter_coefficients = self.calculate_second_order_butterworth_highpass_coefficients
-        self.calculate_lowpass_filter_coefficients = self.calculate_second_order_butterworth_lowpass_coefficients
+
+    def calculate_lowpass_filter_coefficients(self, cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+        return self.calculate_first_order_butterworth_lowpass_coefficients(cutoff_freq, gain, fs)
+
+    def calculate_highpass_filter_coefficients(self, cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+        return self.calculate_first_order_butterworth_highpass_coefficients(cutoff_freq, gain, fs)
 
     @classmethod
     def save_state(cls, cutoffs, filter_id):
@@ -77,46 +81,7 @@ class CrossoverService:
         return [self.dsp.DspNumber.from_bytes(v).value for v in coefficients_blocks]
 
     @staticmethod
-    def convolve_coefficients(coeffs1, coeffs2):
-        """
-        Convolve two sets of filter coefficients (polynomial multiplication).
-
-        Parameters:
-        - coeffs1 (list): Coefficients of the first polynomial.
-        - coeffs2 (list): Coefficients of the second polynomial.
-
-        Returns:
-        - list: Convolved coefficients.
-        """
-        result = [0] * (len(coeffs1) + len(coeffs2) - 1)
-        for i in range(len(coeffs1)):
-            for j in range(len(coeffs2)):
-                result[i + j] += coeffs1[i] * coeffs2[j]
-        return result
-
-    @staticmethod
-    def cascade_two_filters(B1, A1, B2, A2):
-        """
-        Cascade two filters into a single filter.
-
-        Parameters:
-        - B1 (list): Numerator coefficients of the first filter [B0_1, B1_1, ..., Bn_1].
-        - A1 (list): Denominator coefficients of the first filter [A0_1, A1_1, ..., An_1].
-        - B2 (list): Numerator coefficients of the second filter [B0_2, B1_2, ..., Bm_2].
-        - A2 (list): Denominator coefficients of the second filter [A0_2, A1_2, ..., Am_2].
-
-        Returns:
-        - B (list): Numerator coefficients of the resulting cascaded filter.
-        - A (list): Denominator coefficients of the resulting cascaded filter.
-        """
-        # Convolve the numerators and denominators
-        B = convolve_coefficients(B1, B2)
-        A = convolve_coefficients(A1, A2)
-
-        return B, A
-
-    @staticmethod
-    def calculate_first_order_lowpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+    def calculate_first_order_butterworth_lowpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
         Calculate the coefficients for a first-order lowpass filter.
 
@@ -135,7 +100,7 @@ class CrossoverService:
         return {'B0': B0, 'B1': B1, 'B2': 0, 'A1': A1, 'A2': 0}
 
     @staticmethod
-    def calculate_first_order_butterworthhighpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
+    def calculate_first_order_butterworth_highpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
         """
         Calculate the coefficients for a first-order highpass filter.
 
@@ -152,60 +117,6 @@ class CrossoverService:
         B0 = -B1
 
         return {'B0': B0, 'B1': B1, 'B2':0, 'A1': A1, 'A2': 0}
-
-    @staticmethod
-    def calculate_second_order_butterworth_lowpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
-        """
-        Calculate the coefficients for a 2nd order lowpass Butterworth filter.
-
-        Parameters:
-        - cutoff_freq (float): Cutoff frequency for the lowpass filter.
-        - gain (float): Linear gain to apply to the filter.
-        - fs (float): Sampling frequency.
-
-        Returns:
-        - dict: Coefficients for the lowpass filter (B0, B1, B2, A1, A2).
-        """
-        omega = 2 * math.pi * cutoff_freq / fs
-        sn = math.sin(omega)
-        cs = math.cos(omega)
-        alpha = sn / (2 * (1 / math.sqrt(2)))  # Equivalent to sn / sqrt(2)
-        a0 = 1 + alpha
-
-        A1 = -(2 * cs) / a0
-        A2 = (1 - alpha) / a0
-        B1 = (1 - cs) / a0 * (10 ** (gain / 20))
-        B0 = B1 / 2
-        B2 = B0
-
-        return {'B0': B0, 'B1': B1, 'B2': B2, 'A1': A1, 'A2': A2}
-
-    @staticmethod
-    def calculate_second_order_butterworth_highpass_coefficients(cutoff_freq, gain, fs=SAMPLING_FREQ_DEFAULT):
-        """
-        Calculate the coefficients for a 2nd order highpass Butterworth filter.
-
-        Parameters:
-        - cutoff_freq (float): Cutoff frequency for the highpass filter.
-        - gain (float): Linear gain to apply to the filter.
-        - fs (float): Sampling frequency.
-
-        Returns:
-        - dict: Coefficients for the highpass filter (B0, B1, B2, A1, A2).
-        """
-        omega = 2 * math.pi * cutoff_freq / fs
-        sn = math.sin(omega)
-        cs = math.cos(omega)
-        alpha = sn / (2 * (1 / math.sqrt(2)))  # Equivalent to sn / sqrt(2)
-        a0 = 1 + alpha
-
-        A1 = -(2 * cs) / a0
-        A2 = (1 - alpha) / a0
-        B1 = -(1 + cs) / a0 * (10 ** (gain / 20))
-        B0 = -B1 / 2
-        B2 = B0
-
-        return {'B0': B0, 'B1': B1, 'B2': B2, 'A1': A1, 'A2': A2}
 
     
     def calculate_bandpass_coefficients(self, low_cut, high_cut, gain=1, fs=SAMPLING_FREQ_DEFAULT):
