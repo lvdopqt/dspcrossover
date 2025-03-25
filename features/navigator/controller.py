@@ -1,6 +1,6 @@
 class Navigator:
-    def __init__(self, lcd, initial_page):
-        self.lcd = lcd
+    def __init__(self, display, initial_page):
+        self.display = display
         self.page_stack = [initial_page]
         self.display_current_page()
 
@@ -9,9 +9,8 @@ class Navigator:
         return self.page_stack[-1]
 
     def display_current_page(self):
-        self.lcd.clear()
         display_text = self.current_page.display()
-        self.lcd.putstr(display_text)
+        self.display.show(display_text)
 
     def navigate_to(self, page):
         self.page_stack.append(page)

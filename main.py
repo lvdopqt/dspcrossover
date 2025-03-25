@@ -4,17 +4,19 @@ import time
 from external.sigma.sigma_dsp.adau.adau1401.adau1401 import ADAU1401 as ADAU
 from external.sigma.bus.adapters import I2C as SigmaI2C
 from external.lcd.i2c_lcd import I2cLcd
+from external.oled.ssd1306 import SSD1306_I2C
 
 from config import (
     DSP_SCL_PIN, DSP_SCA_PIN,
     ROTARY_ENCODER_CLK_PIN, ROTARY_ENCODER_DT_PIN, ROTARY_ENCODER_SW_PIN,
-    BACK_BUTTON_PIN, LCD_SCL_PIN, LCD_SDA_PIN, I2C_FREQ
+    BACK_BUTTON_PIN, LCD_SCL_PIN, LCD_SDA_PIN, I2C_FREQ, OLED_SCL_PIN, OLED_SDA_PIN
 )
 
 from features.events.event_bus import EventBus
 from features.navigator.controller import Navigator
 from features.rotary_encoder import RotaryEncoder
 from features.back_button import BackButton
+from features.display.controller import Display
 from features.crossover.controller import TwoWayCrossover
 from features.menu.controller import Menu
 from utils.get_params import get_params
@@ -24,7 +26,9 @@ class App:
         """Initialize the application."""
         self.event_bus = self._initialize_event_bus()
         self.dsp = self._initialize_dsp()
-        self.lcd = self._initialize_lcd()
+        #self.lcd = self._initialize_lcd()
+        self.oled = self._initialize_oled()
+        self.display = self._initialize_display()
         self.params = self._load_params()
         self.encoder = self._initialize_rotary_encoder()
         self.back_button = self._initialize_back_button()
@@ -50,6 +54,12 @@ class App:
         """Initialize and return the LCD."""
         lcd_i2c = SoftI2C(scl=Pin(LCD_SCL_PIN), sda=Pin(LCD_SDA_PIN), freq=I2C_FREQ)
         return I2cLcd(lcd_i2c, 0x27, 2, 16)
+
+    def _initialize_oled(self):
+        """Initialize and return the oled."""
+        oled_i2c = SoftI2C(scl=Pin(OLED_SCL_PIN), sda=Pin(OLED_SDA_PIN), freq=I2C_FREQ)
+        return SSD1306_I2C(128, 64, oled_i2c, addr=0x3C, external_vcc=False)
+
 
     def _load_params(self):
         """Load and return the parameters."""
@@ -84,11 +94,13 @@ class App:
                 channel_names=['C', 'D']
                 )
         ]
+    def _initialize_display(self):
+        return Display(oled=self.oled, device='oled')
 
     def _initialize_navigator(self):
         """Initialize and return the Navigator."""
         return Navigator(
-            lcd=self.lcd,
+            display=self.display,
             initial_page=self.menu
         )
 
