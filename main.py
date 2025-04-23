@@ -7,7 +7,7 @@ from external.lcd.i2c_lcd import I2cLcd
 from external.oled.ssd1306 import SSD1306_I2C
 
 from config import (
-    DSP_SCL_PIN, DSP_SCA_PIN,
+    DSP_SCL_PIN, DSP_SDA_PIN,
     ROTARY_ENCODER_CLK_PIN, ROTARY_ENCODER_DT_PIN, ROTARY_ENCODER_SW_PIN,
     BACK_BUTTON_PIN, LCD_SCL_PIN, LCD_SDA_PIN, I2C_FREQ, OLED_SCL_PIN, OLED_SDA_PIN
 )
@@ -43,7 +43,7 @@ class App:
 
     def _initialize_dsp(self):
         """Initialize and return the DSP."""
-        dsp_i2c = SoftI2C(scl=Pin(DSP_SCL_PIN), sda=Pin(DSP_SCA_PIN), freq=I2C_FREQ)
+        dsp_i2c = SoftI2C(scl=Pin(DSP_SCL_PIN), sda=Pin(DSP_SDA_PIN), freq=I2C_FREQ)
         bus = SigmaI2C(dsp_i2c)
         return ADAU(bus)
 
